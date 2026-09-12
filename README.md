@@ -1,344 +1,171 @@
-# 🤖 AI-Powered Intelligent Chatbot
+# 🤖 Basic AI Chatbot
 
-### LLM • AI Agents • RAG • Tool Calling • LangChain • LangGraph • MCP
+### React • FastAPI • LLM API
 
-> An intelligent chatbot system designed to understand user queries, generate responses using Large Language Models, retrieve information from external knowledge sources, and interact with tools to perform useful tasks.
+> A simple AI-powered chatbot that allows users to send messages and receive intelligent responses from a Large Language Model (LLM).
 
 ---
 
-## 🚀 Overview
+## 📌 Overview
 
-This project focuses on building a modern **AI chatbot** rather than a simple question-and-answer application.
+This project is a **basic LLM-powered chatbot** built to understand how modern AI chatbot applications work.
 
-The chatbot uses an **LLM as its reasoning engine** and can be extended with:
+The application follows a simple flow:
 
-* 🧠 Large Language Models (LLMs)
-* 🔧 Tool Calling
-* 🌐 Web Search
-* 📚 Retrieval-Augmented Generation (RAG)
-* 🔗 LangChain
-* 🕸️ LangGraph
-* 🔌 MCP (Model Context Protocol)
-* ⚡ FastAPI
-* 🎨 React
+```text
+User
+  ↓
+React Chat Interface
+  ↓
+FastAPI Backend
+  ↓
+LLM API
+  ↓
+AI Response
+  ↓
+React Chat Interface
+```
 
-The goal is to understand how modern AI assistants are designed and how an LLM can interact with external tools and knowledge.
+The main goal of this phase is to understand the **fundamentals of connecting a frontend, backend, and LLM** before adding advanced AI features.
 
 ---
 
 ## 🎯 Project Goals
 
-* Understand how LLM-powered applications work
-* Build a chatbot using an LLM API
-* Implement conversation history
-* Connect the chatbot with external tools
-* Implement RAG for custom documents
-* Allow the AI to decide when a tool is required
-* Build multi-step AI workflows
-* Understand agent architecture
-* Explore MCP-based tool integration
-* Create a production-style AI application
+* Understand how an LLM-powered chatbot works
+* Build a simple chat interface
+* Connect React with FastAPI
+* Connect FastAPI with an LLM API
+* Send user messages to the LLM
+* Display AI-generated responses
+* Learn basic API communication
+* Secure API keys using environment variables
 
 ---
 
-# 🏗️ System Architecture
+## 🧠 How It Works
+
+### 1. User sends a message
+
+The user enters a message in the chat interface.
 
 ```text
-                    ┌─────────────────────┐
-                    │       USER          │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │    React Frontend  │
-                    │   Chat Interface    │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │      FastAPI        │
-                    │      Backend        │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │    AI Agent Layer   │
-                    │                     │
-                    │   LangChain /       │
-                    │   LangGraph        │
-                    └──────────┬──────────┘
-                               │
-                    ┌──────────┴──────────┐
-                    │                     │
-                    ▼                     ▼
-            ┌───────────────┐     ┌────────────────┐
-            │     LLM       │     │     Tools      │
-            │   The Brain   │     │                │
-            └───────┬───────┘     │ • Web Search  │
-                    │             │ • Calculator  │
-                    │             │ • APIs        │
-                    │             │ • Custom Tools│
-                    │             └────────────────┘
-                    │
-                    ▼
-             ┌──────────────┐
-             │     RAG      │
-             │              │
-             │ Documents →  │
-             │ Embeddings → │
-             │ Vector DB    │
-             └──────┬───────┘
-                    │
-                    ▼
-             ┌──────────────┐
-             │ Final Answer │
-             └──────────────┘
+"Explain Machine Learning"
 ```
 
----
+### 2. Frontend sends the message
 
-# 🧠 How It Works
-
-### 1. User asks a question
-
-Example:
+React sends the user's message to the FastAPI backend.
 
 ```text
-What is machine learning?
+React
+  ↓
+POST /chat
 ```
 
-The question is sent to the backend.
+### 3. Backend sends it to the LLM
 
----
-
-### 2. LLM receives the question
-
-The **LLM acts as the brain** of the chatbot.
-
-It understands the user's request and determines what kind of response is required.
-
----
-
-### 3. The AI decides whether a tool is required
-
-For example:
+FastAPI receives the message and sends it to the selected LLM API.
 
 ```text
-User:
-What is the weather in Bangalore?
+FastAPI
+   ↓
+LLM API
 ```
 
-The LLM can determine:
+### 4. LLM generates a response
+
+The LLM processes the message and generates an answer.
 
 ```text
-I need a weather tool.
-```
-
-It then calls the appropriate tool.
-
----
-
-### 4. Tool returns information
-
-```text
-Weather Tool
+User Question
       ↓
-Current weather data
+     LLM
       ↓
-LLM
+AI Response
 ```
 
-The LLM uses the returned information to generate the final response.
+### 5. Response is displayed
+
+The backend sends the response back to React, which displays it in the chat interface.
 
 ---
 
-### 5. RAG handles private knowledge
-
-If the user asks:
+# 🏗️ Architecture
 
 ```text
-What projects are mentioned in my resume?
+                    ┌──────────────┐
+                    │    USER      │
+                    └──────┬───────┘
+                           │
+                           ▼
+                 ┌──────────────────┐
+                 │  React Frontend  │
+                 │                  │
+                 │   Chat Interface │
+                 └────────┬─────────┘
+                          │
+                          │ HTTP Request
+                          ▼
+                 ┌──────────────────┐
+                 │  FastAPI Backend │
+                 │                  │
+                 │    /chat API     │
+                 └────────┬─────────┘
+                          │
+                          │ API Request
+                          ▼
+                 ┌──────────────────┐
+                 │     LLM API      │
+                 │                  │
+                 │   AI / "Brain"   │
+                 └────────┬─────────┘
+                          │
+                          │ AI Response
+                          ▼
+                 ┌──────────────────┐
+                 │  FastAPI Backend │
+                 └────────┬─────────┘
+                          │
+                          ▼
+                 ┌──────────────────┐
+                 │  React Frontend  │
+                 └────────┬─────────┘
+                          │
+                          ▼
+                    ┌──────────────┐
+                    │    USER      │
+                    └──────────────┘
 ```
-
-The system can retrieve relevant information from uploaded documents.
-
-```text
-Documents
-    ↓
-Text Extraction
-    ↓
-Chunking
-    ↓
-Embeddings
-    ↓
-Vector Database
-    ↓
-Relevant Information
-    ↓
-LLM
-    ↓
-Answer
-```
-
----
-
-# 🔧 Tools
-
-The chatbot can be extended with different tools.
-
-### Example Tools
-
-| Tool             | Purpose                            |
-| ---------------- | ---------------------------------- |
-| 🌐 Web Search    | Search current information         |
-| 🧮 Calculator    | Perform calculations               |
-| 📚 RAG           | Search private documents           |
-| 🔌 APIs          | Retrieve external data             |
-| 🗄️ Database     | Query structured data              |
-| 🕐 Date/Time     | Get current date and time          |
-| 🛠️ Custom Tools | Perform application-specific tasks |
-
----
-
-# 📚 RAG Pipeline
-
-Retrieval-Augmented Generation allows the chatbot to answer questions using information that is not part of the LLM's original training data.
-
-```text
-             Documents
-                 │
-                 ▼
-          Text Extraction
-                 │
-                 ▼
-             Chunking
-                 │
-                 ▼
-            Embeddings
-                 │
-                 ▼
-          Vector Database
-                 │
-                 ▼
-          Similarity Search
-                 │
-                 ▼
-       Relevant Context
-                 │
-                 ▼
-                LLM
-                 │
-                 ▼
-          Generated Answer
-```
-
----
-
-# 🕸️ Agent Workflow
-
-The chatbot can use an agent-based workflow.
-
-```text
-User Query
-    │
-    ▼
-   LLM
-    │
-    ├── Simple Question ──────► Answer
-    │
-    ├── Web Search Needed ────► Web Tool
-    │                              │
-    │                              ▼
-    │                             LLM
-    │
-    ├── Document Needed ──────► RAG
-    │                              │
-    │                              ▼
-    │                             LLM
-    │
-    └── Calculation Needed ───► Calculator
-                                   │
-                                   ▼
-                                  LLM
-                                   │
-                                   ▼
-                             Final Answer
-```
-
----
-
-# 🔌 MCP
-
-This project also explores **Model Context Protocol (MCP)**.
-
-MCP provides a standardized way for AI applications to connect models with external tools and data sources.
-
-```text
-                 AI Application
-                       │
-                       ▼
-                      LLM
-                       │
-                       ▼
-                  MCP Client
-                       │
-              ┌────────┼────────┐
-              │        │        │
-              ▼        ▼        ▼
-           MCP Tool  MCP Tool  MCP Tool
-              │        │        │
-              ▼        ▼        ▼
-            API      Database   Files
-```
-
-This helps demonstrate how modern AI systems can connect an LLM to external capabilities.
 
 ---
 
 # 🛠️ Tech Stack
 
-## Backend
-
-* Python
-* FastAPI
-* Pydantic
-* Uvicorn
-
-## AI / LLM
-
-* Large Language Models
-* LLM APIs
-* Prompt Engineering
-* Tool Calling
-* AI Agents
-
-## AI Frameworks
-
-* LangChain
-* LangGraph
-* MCP
-
-## RAG
-
-* Embeddings
-* Vector Database
-* Document Processing
-* Similarity Search
-
-## Frontend
+### Frontend
 
 * React
 * Vite
 * JavaScript
 * CSS
 
-## Development Tools
+### Backend
+
+* Python
+* FastAPI
+* Uvicorn
+
+### AI
+
+* Large Language Model (LLM)
+* LLM API
+
+### Development
 
 * Git
 * GitHub
 * VS Code
 * Python Virtual Environment
-* REST APIs
 
 ---
 
@@ -349,27 +176,6 @@ AI-CHATBOT/
 │
 ├── backend/
 │   ├── main.py
-│   ├── config.py
-│   │
-│   ├── agent/
-│   │   ├── agent.py
-│   │   ├── prompts.py
-│   │   └── workflow.py
-│   │
-│   ├── tools/
-│   │   ├── web_search.py
-│   │   ├── calculator.py
-│   │   └── custom_tools.py
-│   │
-│   ├── rag/
-│   │   ├── loader.py
-│   │   ├── embeddings.py
-│   │   ├── retriever.py
-│   │   └── vectorstore.py
-│   │
-│   ├── mcp/
-│   │   └── mcp_client.py
-│   │
 │   ├── requirements.txt
 │   └── .env
 │
@@ -377,17 +183,14 @@ AI-CHATBOT/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── App.jsx
-│   │   └── main.jsx
+│   │   ├── main.jsx
+│   │   └── App.css
 │   │
 │   ├── package.json
 │   └── vite.config.js
 │
-├── data/
-│   └── documents/
-│
 ├── .gitignore
-├── README.md
-└── LICENSE
+└── README.md
 ```
 
 ---
@@ -404,7 +207,7 @@ cd AI-CHATBOT
 
 ---
 
-## 2. Create Virtual Environment
+## 2. Create Python Virtual Environment
 
 ```bash
 python -m venv venv
@@ -426,19 +229,19 @@ pip install -r backend/requirements.txt
 
 ---
 
-## 4. Configure Environment Variables
+## 4. Add API Key
 
-Create a `.env` file inside the backend directory.
+Create a `.env` file inside the `backend` folder.
 
 ```env
-LLM_API_KEY=your_api_key
+LLM_API_KEY=your_api_key_here
 ```
 
-Additional API keys can be added depending on the tools being used.
+> Never upload your `.env` file or API key to GitHub.
 
 ---
 
-## 5. Start FastAPI
+## 5. Start the Backend
 
 ```bash
 cd backend
@@ -446,7 +249,7 @@ cd backend
 uvicorn main:app --reload
 ```
 
-Backend:
+Backend will run at:
 
 ```text
 http://127.0.0.1:8000
@@ -454,7 +257,7 @@ http://127.0.0.1:8000
 
 ---
 
-## 6. Start React Frontend
+## 6. Start the Frontend
 
 Open another terminal:
 
@@ -466,7 +269,7 @@ npm install
 npm run dev
 ```
 
-Frontend:
+Frontend will run at:
 
 ```text
 http://localhost:5173
@@ -474,14 +277,41 @@ http://localhost:5173
 
 ---
 
-# 💬 Example Queries
+# 💬 Example
 
-### General Question
+### User
 
 ```text
-What is artificial intelligence?
+What is Artificial Intelligence?
 ```
 
-### Calculation
+### Chatbot
 
-`
+```text
+Artificial Intelligence is a field of computer science
+that focuses on creating systems capable of performing
+tasks that normally require human intelligence.
+```
+
+---
+
+# 🔄 Current Chatbot Flow
+
+```text
+User Message
+     ↓
+React
+     ↓
+FastAPI
+     ↓
+LLM API
+     ↓
+Generated Response
+     ↓
+FastAPI
+     ↓
+React
+     ↓
+User
+``
+```
