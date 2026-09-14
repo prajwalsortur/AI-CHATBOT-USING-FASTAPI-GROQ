@@ -4,13 +4,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple AI Chatbot</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .chat-container {
+        width: 400px;
+        height: 600px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 22px;
+        margin: 0;
+        padding: 20px;
+        background: #222;
+        color: white;
+    }
+
+    #chat-box {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+    }
+
+    .input-area {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+    }
+
+    #message-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+    }
+
+    #send-button {
+        margin-left: 8px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        background: #222;
+        color: white;
+        cursor: pointer;
+    }
+
+    #send-button:hover {
+        background: #444;
+    }
+</style>
 </head>
 
 <body>
 
-    <h1>Simple AI Chatbot</h1>
+    <div class="chat-container">
 
-    <p>Chatbot frontend is working!</p>
+        <h1>🤖 Simple AI Chatbot</h1>
 
+        <div id="chat-box">
+            <!-- Messages will appear here -->
+        </div>
+
+        <div class="input-area">
+            <input
+                type="text"
+                id="message-input"
+                placeholder="Type your message..."
+            >
+
+            <button id="send-button">Send</button>
+        </div>
+
+    </div>
+<script>
+    const sendButton = document.getElementById("send-button");
+    const messageInput = document.getElementById("message-input");
+    const chatBox = document.getElementById("chat-box");
+
+    sendButton.addEventListener("click", async () => {
+
+        const message = messageInput.value;
+
+        if (message.trim() === "") {
+            return;
+        }
+
+        // Show user message
+        chatBox.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+
+        // Clear input
+        messageInput.value = "";
+
+        // Send message to FastAPI
+        const response = await fetch("http://127.0.0.1:8000/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: message
+            })
+        });
+
+        const data = await response.json();
+
+        // Show AI response
+        chatBox.innerHTML += `<p><strong>AI:</strong> ${data.response}</p>`;
+    });
+</script>
 </body>
 </html>
