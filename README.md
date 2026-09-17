@@ -1,689 +1,293 @@
-# 🤖 Basic AI Chatbot
-Absolutely. Let's keep **Project 1 = Simple AI Chatbot** only. No RAG, agents, tools, LangChain, LangGraph, MCP, etc. yet.
+# 🤖 Simple AI Chatbot
 
-The goal is to first understand **how a real LLM-powered chatbot works from beginning to end**.
+A beginner-friendly AI chatbot built with **HTML, CSS, JavaScript, FastAPI, Python, and the Groq API**.
 
-# 🤖 Project 1 — Simple AI Chatbot
-
-### Project Goal
-
-Build a simple chatbot where:
-
-> **User → Chat UI → Backend → LLM → Backend → Chat UI → User**
-
-The user types a question, the application sends it to an LLM, receives the response, and displays it.
+This project demonstrates how a web-based chatbot communicates with a backend API and uses a Large Language Model (LLM) to generate AI responses.
 
 ---
 
-# 1. What are we building?
+## ✨ Features
 
-A simple web-based chatbot.
-
-Example:
-
-```text
-User:
-What is Machine Learning?
-
-        ↓
-
-Chatbot Backend
-
-        ↓
-
-LLM
-(Groq API)
-
-        ↓
-
-Response
-
-        ↓
-
-Chatbot UI
-
-AI:
-Machine Learning is a branch of AI...
-```
-
-That's it.
-
-We are **not** making an AI agent yet.
+* 💬 Interactive chat interface
+* 🤖 AI-generated responses using Groq
+* ⚡ FastAPI backend
+* 🌐 HTML, CSS, and JavaScript frontend
+* 🔐 API key stored securely using environment variables
+* 🔄 Real-time communication between frontend and backend
+* 🧩 Simple architecture that can be extended with more AI features
 
 ---
 
-# 2. Technologies we will use
-
-| Technology              | Why we use it                              |
-| ----------------------- | ------------------------------------------ |
-| **Python**              | Backend programming                        |
-| **FastAPI**             | Create our chatbot API                     |
-| **Groq API**            | Connect our application to an LLM          |
-| **LLM**                 | Generates the actual answers               |
-| **HTML/CSS/JavaScript** | Simple chatbot interface                   |
-| **Requests / HTTP**     | Communication between frontend and backend |
-| **python-dotenv**       | Safely load API keys                       |
-| **Git/GitHub**          | Version control and portfolio              |
-
-### Important
-
-The **LLM is the brain**.
-
-Our Python/FastAPI application is basically the system that:
+## 🏗️ Project Architecture
 
 ```text
-receives message
-      ↓
-sends message to LLM
-      ↓
-gets response
-      ↓
-returns response to user
+User
+  │
+  ▼
+Frontend
+HTML + CSS + JavaScript
+  │
+  │ HTTP Request
+  ▼
+FastAPI Backend
+  │
+  │ API Request
+  ▼
+Groq API
+  │
+  │ AI Response
+  ▼
+FastAPI Backend
+  │
+  │ JSON Response
+  ▼
+Frontend
+  │
+  ▼
+User
 ```
 
 ---
 
-# 3. Basic Architecture
+## 🛠️ Tech Stack
 
-Our first architecture will be deliberately simple:
+### Frontend
 
-```text
-                 ┌──────────────────┐
-                 │      USER        │
-                 └────────┬─────────┘
-                          │
-                          │ Message
-                          ▼
-                 ┌──────────────────┐
-                 │   CHAT UI        │
-                 │ HTML/CSS/JS      │
-                 └────────┬─────────┘
-                          │
-                          │ HTTP Request
-                          ▼
-                 ┌──────────────────┐
-                 │    FASTAPI       │
-                 │    BACKEND       │
-                 └────────┬─────────┘
-                          │
-                          │ API Request
-                          ▼
-                 ┌──────────────────┐
-                 │    GROQ API      │
-                 │      ↓           │
-                 │      LLM         │
-                 └────────┬─────────┘
-                          │
-                          │ AI Response
-                          ▼
-                 ┌──────────────────┐
-                 │    FASTAPI       │
-                 └────────┬─────────┘
-                          │
-                          ▼
-                 ┌──────────────────┐
-                 │     CHAT UI      │
-                 └────────┬─────────┘
-                          │
-                          ▼
-                        USER
-```
+* HTML
+* CSS
+* JavaScript
+
+### Backend
+
+* Python
+* FastAPI
+* Uvicorn
+
+### AI
+
+* Groq API
+* Large Language Model (LLM)
+
+### Development Tools
+
+* Git
+* GitHub
+* VS Code
+* Python Virtual Environment
 
 ---
 
-# 4. Project Phases
-
-We'll build it in **7 phases**.
+## 📁 Project Structure
 
 ```text
-PHASE 1 → Project Setup
-PHASE 2 → Understand the LLM API
-PHASE 3 → Build FastAPI Backend
-PHASE 4 → Connect Backend to LLM
-PHASE 5 → Build Chat Interface
-PHASE 6 → Connect Frontend + Backend
-PHASE 7 → Testing + GitHub
-```
-
-Let's understand what happens in each phase.
-
----
-
-# 🟢 PHASE 1 — Project Setup
-
-### What happens?
-
-We create our project and Python environment.
-
-Structure:
-
-```text
-simple-chatbot/
+CHAT-BOT/
 │
 ├── backend/
 │   ├── main.py
+│   ├── requirements.txt
 │   ├── .env
-│   └── requirements.txt
+│   └── ...
 │
 ├── frontend/
 │   ├── index.html
 │   ├── style.css
-│   └── script.js
+│   ├── script.js
+│   └── ...
 │
 ├── .gitignore
 └── README.md
 ```
 
-### Why?
-
-We separate:
-
-```text
-frontend → what the user sees
-
-backend → what happens behind the scenes
-```
-
-This is a standard approach for real applications.
+> `.env` should never be committed to GitHub because it contains the API key.
 
 ---
 
-# 🟢 PHASE 2 — Understand the LLM API
+## 🚀 Getting Started
 
-Before writing complicated code, we'll understand what we're actually calling.
+### 1. Clone the Repository
 
-Our application will send something like:
-
-```text
-"Explain Machine Learning"
+```bash
+git clone https://github.com/prajwalsortur/CHAT-BOT.git
 ```
 
-to the LLM API.
+Navigate into the project:
 
-The LLM processes it and returns:
-
-```text
-"Machine Learning is a branch of Artificial Intelligence..."
-```
-
-Conceptually:
-
-```text
-Our Application
-      │
-      │ Prompt
-      ▼
-   LLM API
-      │
-      │ Response
-      ▼
-Our Application
-```
-
-### Why Groq?
-
-We're using Groq initially because it gives us a relatively simple way to access hosted LLMs without having to run a large model locally.
-
-You already used Groq in your previous portfolio project, so this also gives you a chance to understand **what was actually happening behind that API call**.
-
----
-
-# 🟢 PHASE 3 — Build the FastAPI Backend
-
-Now we'll create our backend.
-
-FastAPI will expose an endpoint such as:
-
-```text
-POST /chat
-```
-
-The frontend will send:
-
-```json
-{
-    "message": "What is Python?"
-}
-```
-
-The backend receives it.
-
-### Why FastAPI?
-
-Because we need something that can act as the **middle layer** between our UI and the LLM.
-
-Without the backend:
-
-```text
-Frontend ─────────→ LLM API
-```
-
-But we don't want to expose our API key in frontend JavaScript.
-
-Instead:
-
-```text
-Frontend
-   ↓
-FastAPI
-   ↓
-LLM API
-```
-
-This is much safer and closer to how production applications are structured.
-
----
-
-# 🟢 PHASE 4 — Connect FastAPI to the LLM
-
-This is the **core phase**.
-
-Our backend will receive:
-
-```text
-User message
-```
-
-Then:
-
-```text
-FastAPI
-   ↓
-Create LLM request
-   ↓
-Send request to Groq
-   ↓
-LLM generates response
-   ↓
-Receive response
-```
-
-For example:
-
-```text
-User:
-What is AI?
-
-↓
-
-FastAPI
-
-↓
-
-Groq
-
-↓
-
-LLM
-
-↓
-
-"Artificial Intelligence is..."
-
-↓
-
-FastAPI
-
-↓
-
-Frontend
-```
-
-### API Key
-
-We'll keep the API key inside:
-
-```text
-.env
-```
-
-Example:
-
-```text
-GROQ_API_KEY=your_api_key
-```
-
-And `.env` will **not** be uploaded to GitHub.
-
----
-
-# 🟢 PHASE 5 — Build the Chat Interface
-
-Now we'll create the part the user actually sees.
-
-Something like:
-
-```text
-┌──────────────────────────────────────┐
-│          🤖 AI CHATBOT               │
-├──────────────────────────────────────┤
-│                                      │
-│ AI: Hello! How can I help you?       │
-│                                      │
-│ You: What is Python?                 │
-│                                      │
-│ AI: Python is a programming...       │
-│                                      │
-├──────────────────────────────────────┤
-│ Type your message...          [Send] │
-└──────────────────────────────────────┘
-```
-
-We'll use:
-
-### HTML
-
-Creates the structure.
-
-### CSS
-
-Makes it look good.
-
-### JavaScript
-
-Makes it interactive.
-
-For example:
-
-```text
-User clicks Send
-        ↓
-JavaScript gets message
-        ↓
-Sends HTTP request
-        ↓
-FastAPI
+```bash
+cd CHAT-BOT
 ```
 
 ---
 
-# 🟢 PHASE 6 — Connect Frontend + Backend
+## 🐍 2. Create a Virtual Environment
 
-This is where everything comes together.
+Navigate to the backend:
 
-Suppose the user enters:
-
-```text
-What is Deep Learning?
+```bash
+cd backend
 ```
 
-JavaScript sends:
+Create a virtual environment:
 
-```text
-POST /chat
+```bash
+python -m venv .venv
 ```
 
-to FastAPI.
+Activate it on Windows:
 
-FastAPI sends the message to the LLM.
-
-LLM returns:
-
-```text
-Deep Learning is a subset of Machine Learning...
-```
-
-FastAPI returns it to JavaScript.
-
-JavaScript displays it.
-
-So the complete flow becomes:
-
-```text
-                USER
-                  │
-                  ▼
-             CHAT UI
-                  │
-                  │ HTTP
-                  ▼
-              FASTAPI
-                  │
-                  │ API
-                  ▼
-               GROQ
-                  │
-                  ▼
-                LLM
-                  │
-                  │ Response
-                  ▼
-              FASTAPI
-                  │
-                  ▼
-             CHAT UI
-                  │
-                  ▼
-                USER
-```
-
-🎯 **This is the most important thing you should understand from Project 1.**
-
----
-
-# 🟢 PHASE 7 — Testing + GitHub
-
-Once the chatbot works, we'll test things like:
-
-### Normal question
-
-```text
-What is Python?
-```
-
-### Technical question
-
-```text
-Explain neural networks.
-```
-
-### Empty message
-
-```text
-""
-```
-
-### Long message
-
-```text
-...
-```
-
-### API failure
-
-What happens if the LLM API doesn't respond?
-
-We'll handle basic errors.
-
-Then we'll clean the project and push it to GitHub.
-
----
-
-# 5. What we are NOT using yet
-
-This is important.
-
-For **Project 1**, we deliberately won't use:
-
-❌ LangChain
-❌ LangGraph
-❌ MCP
-❌ RAG
-❌ Vector databases
-❌ Web search
-❌ AI agents
-❌ Tools
-❌ Document processing
-❌ Memory systems
-❌ Multiple LLMs
-❌ Complex frontend frameworks
-❌ Fine-tuning
-
-Why?
-
-Because if we immediately use all of these, you may build something without understanding **what is actually happening underneath**.
-
----
-
-# 6. What you should understand after Project 1
-
-By the end, you should be able to explain this confidently:
-
-### 1. What is an LLM?
-
-The model that generates the chatbot's response.
-
-### 2. What is an API?
-
-A communication interface that allows our application to interact with another service.
-
-### 3. What is Groq?
-
-A platform/API through which we can access hosted LLMs.
-
-### 4. What is FastAPI?
-
-Our backend framework.
-
-### 5. Why do we need a backend?
-
-To handle application logic and keep secrets such as API keys away from the browser.
-
-### 6. What is a prompt?
-
-The input/instructions sent to the model.
-
-### 7. What is a response?
-
-The output generated by the model.
-
-### 8. What is HTTP?
-
-The communication mechanism between our frontend and backend.
-
-### 9. What is JSON?
-
-The structured format we'll use to send data between frontend and backend.
-
-For example:
-
-```json
-{
-    "message": "Hello"
-}
-```
-
-### 10. What is the complete architecture?
-
-You should be able to draw:
-
-```text
-User
- ↓
-Frontend
- ↓
-HTTP Request
- ↓
-FastAPI
- ↓
-Groq API
- ↓
-LLM
- ↓
-Response
- ↓
-FastAPI
- ↓
-Frontend
- ↓
-User
+```bash
+.venv\Scripts\activate
 ```
 
 ---
 
-# 7. Development Order
+## 📦 3. Install Dependencies
 
-We should **not build everything at once**.
-
-We'll work like this:
-
-```text
-STEP 1
-Create project folder
-
-        ↓
-
-STEP 2
-Create Python virtual environment
-
-        ↓
-
-STEP 3
-Install required packages
-
-        ↓
-
-STEP 4
-Test Groq API separately
-
-        ↓
-
-STEP 5
-Create FastAPI server
-
-        ↓
-
-STEP 6
-Create /chat endpoint
-
-        ↓
-
-STEP 7
-Connect FastAPI → Groq
-
-        ↓
-
-STEP 8
-Test backend using Swagger
-
-        ↓
-
-STEP 9
-Create HTML interface
-
-        ↓
-
-STEP 10
-Add CSS
-
-        ↓
-
-STEP 11
-Add JavaScript
-
-        ↓
-
-STEP 12
-Connect frontend → FastAPI
-
-        ↓
-
-STEP 13
-Test complete chatbot
-
-        ↓
-
-STEP 14
-Clean project
-
-        ↓
-
-STEP 15
-GitHub + README
+```bash
+pip install -r requirements.txt
 ```
 
-### And importantly:
+---
 
-Since you prefer learning **step-by-step**, we'll do **one step at a time**. I'll explain what each command/file does in simple terms, you run it, show me the output, and then we move to the next step.
+## 🔑 4. Configure the Groq API Key
 
-**Project 1 = Simple Chatbot.** Once this works and you genuinely understand the flow, **Project 2 can start adding things like memory/RAG/tools/agents** rather than mixing everything into this first project.
+Create a `.env` file inside the `backend` folder.
+
+Add:
+
+```env
+GROQ_API_KEY=your_groq_api_key_here
+```
+
+Replace the value with your own Groq API key.
+
+**Never upload your `.env` file to GitHub.**
+
+---
+
+## ▶️ 5. Start the Backend
+
+From the `backend` folder:
+
+```bash
+uvicorn main:app --reload
+```
+
+The FastAPI server will run locally at:
+
+```text
+http://127.0.0.1:8000
+```
+
+FastAPI documentation is available at:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+## 🌐 6. Run the Frontend
+
+Open the frontend `index.html` in your browser, or use the development setup included in the project.
+
+Make sure the FastAPI backend is running before sending messages.
+
+---
+
+## 💬 How It Works
+
+1. The user enters a message in the chatbot.
+2. JavaScript sends the message to the FastAPI backend.
+3. FastAPI receives the request.
+4. The backend sends the message to the Groq API.
+5. The LLM generates a response.
+6. FastAPI sends the response back to the frontend.
+7. The chatbot displays the AI response.
+
+---
+
+## 🧠 What I Learned
+
+Through this project, I learned the basic workflow behind an AI-powered web application:
+
+* How frontend and backend communicate
+* How to create APIs using FastAPI
+* How HTTP requests work
+* How to connect an application to an LLM API
+* How to use environment variables for API keys
+* How to use Python virtual environments
+* How to structure a simple full-stack AI application
+* How to use Git and GitHub for version control
+
+---
+
+## 🔮 Future Improvements
+
+This project is intentionally kept simple as **Version 1**.
+
+Possible future improvements include:
+
+* 🧠 Conversation memory
+* 📄 RAG / document-based question answering
+* 📎 File upload
+* 🎙️ Voice input and output
+* 🔐 User authentication
+* 💾 Chat history
+* 🧰 AI tools and function calling
+* 📊 Conversation analytics
+* 🌐 Deployment
+* 🤖 More advanced agent capabilities
+
+---
+
+## 🎯 Project Goal
+
+The goal of this project is to understand the fundamentals of building an **AI-powered chatbot from scratch**, starting with a simple implementation and gradually adding more advanced AI capabilities.
+
+---
+
+## 👨‍💻 Author
+
+**Prajwal Sortur**
+
+Electronics & Communication Engineering Graduate
+Interested in:
+
+* Data Science
+* Artificial Intelligence
+* Machine Learning
+* Generative AI
+* AI Engineering
+* Data Analytics
+
+### 🔗 Links
+
+* GitHub: https://github.com/prajwalsortur
+* Project Repository: https://github.com/prajwalsortur/CHAT-BOT
+
+---
+
+## ⭐ Future Roadmap
+
+```text
+Version 1
+Simple AI Chatbot
+       ↓
+Version 2
+Conversation Memory
+       ↓
+Version 3
+RAG + Document Chat
+       ↓
+Version 4
+AI Tools / Function Calling
+       ↓
+Version 5
+Agentic AI Chatbot
+```
+
+---
+
+## 📄 License
+
+This project is created for learning and educational purposes.
