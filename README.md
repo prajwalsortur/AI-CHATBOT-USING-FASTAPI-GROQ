@@ -1,293 +1,144 @@
-# 🤖 Simple AI Chatbot
+# AI CHATBOT USING FASTAPI & GROQ
 
-A beginner-friendly AI chatbot built with **HTML, CSS, JavaScript, FastAPI, Python, and the Groq API**.
+A simple AI chatbot built with **HTML, CSS, JavaScript, FastAPI, and Groq API**.
 
-This project demonstrates how a web-based chatbot communicates with a backend API and uses a Large Language Model (LLM) to generate AI responses.
+The frontend allows users to send messages, while the FastAPI backend communicates with the Groq LLM and returns the AI-generated response.
 
----
+## 🚀 Features
 
-## ✨ Features
-
-* 💬 Interactive chat interface
-* 🤖 AI-generated responses using Groq
+* 💬 Simple AI chat interface
 * ⚡ FastAPI backend
-* 🌐 HTML, CSS, and JavaScript frontend
-* 🔐 API key stored securely using environment variables
-* 🔄 Real-time communication between frontend and backend
-* 🧩 Simple architecture that can be extended with more AI features
+* 🤖 Groq LLM integration
+* 🌐 HTML, CSS & JavaScript frontend
+* 🔐 API key stored securely using `.env`
+* 🔗 Frontend connected to backend API
 
----
+## 🛠️ Technologies Used
 
-## 🏗️ Project Architecture
-
-```text
-User
-  │
-  ▼
-Frontend
-HTML + CSS + JavaScript
-  │
-  │ HTTP Request
-  ▼
-FastAPI Backend
-  │
-  │ API Request
-  ▼
-Groq API
-  │
-  │ AI Response
-  ▼
-FastAPI Backend
-  │
-  │ JSON Response
-  ▼
-Frontend
-  │
-  ▼
-User
-```
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-
-* HTML
-* CSS
-* JavaScript
-
-### Backend
-
-* Python
-* FastAPI
-* Uvicorn
-
-### AI
-
-* Groq API
-* Large Language Model (LLM)
-
-### Development Tools
-
-* Git
-* GitHub
-* VS Code
-* Python Virtual Environment
-
----
+* **Python**
+* **FastAPI**
+* **Uvicorn**
+* **Groq API**
+* **HTML**
+* **CSS**
+* **JavaScript**
+* **Git & GitHub**
 
 ## 📁 Project Structure
 
 ```text
-CHAT-BOT/
+AI-CHATBOT/
 │
 ├── backend/
 │   ├── main.py
-│   ├── requirements.txt
-│   ├── .env
-│   └── ...
+│   └── .env
 │
 ├── frontend/
-│   ├── index.html
-│   ├── style.css
-│   ├── script.js
-│   └── ...
+│   └── index.html
 │
 ├── .gitignore
 └── README.md
 ```
 
-> `.env` should never be committed to GitHub because it contains the API key.
+## ⚙️ How It Works
 
----
+```text
+User
+  ↓
+Frontend
+  ↓
+FastAPI Backend
+  ↓
+Groq API
+  ↓
+AI Response
+  ↓
+Frontend
+```
 
-## 🚀 Getting Started
+## 🧑‍💻 Run the Project Locally
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/prajwalsortur/CHAT-BOT.git
 ```
 
-Navigate into the project:
+### 2. Open the project
 
 ```bash
 cd CHAT-BOT
 ```
 
----
-
-## 🐍 2. Create a Virtual Environment
-
-Navigate to the backend:
-
-```bash
-cd backend
-```
-
-Create a virtual environment:
+### 3. Create and activate virtual environment
 
 ```bash
 python -m venv .venv
 ```
 
-Activate it on Windows:
+**Windows:**
 
 ```bash
 .venv\Scripts\activate
 ```
 
----
-
-## 📦 3. Install Dependencies
+### 4. Install dependencies
 
 ```bash
-pip install -r requirements.txt
+pip install fastapi uvicorn groq python-dotenv
 ```
 
----
+### 5. Add your Groq API key
 
-## 🔑 4. Configure the Groq API Key
-
-Create a `.env` file inside the `backend` folder.
-
-Add:
+Create a `.env` file inside the `backend` folder:
 
 ```env
-GROQ_API_KEY=your_groq_api_key_here
+GROQ_API_KEY=your_api_key_here
 ```
 
-Replace the value with your own Groq API key.
+### 6. Start the backend
 
-**Never upload your `.env` file to GitHub.**
-
----
-
-## ▶️ 5. Start the Backend
-
-From the `backend` folder:
+From the project root:
 
 ```bash
-uvicorn main:app --reload
+python -m uvicorn backend.main:app --reload
 ```
 
-The FastAPI server will run locally at:
+The backend will run at:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-FastAPI documentation is available at:
+### 7. Open the frontend
+
+Open:
 
 ```text
-http://127.0.0.1:8000/docs
+frontend/index.html
 ```
 
----
+in your browser and start chatting.
 
-## 🌐 6. Run the Frontend
+## 🔐 Security
 
-Open the frontend `index.html` in your browser, or use the development setup included in the project.
+The Groq API key is stored in the `.env` file and should **never be uploaded to GitHub**.
 
-Make sure the FastAPI backend is running before sending messages.
+Make sure `.env` is included in `.gitignore`.
 
----
+## 📌 Project Status
 
-## 💬 How It Works
+**Version 1 — Completed**
 
-1. The user enters a message in the chatbot.
-2. JavaScript sends the message to the FastAPI backend.
-3. FastAPI receives the request.
-4. The backend sends the message to the Groq API.
-5. The LLM generates a response.
-6. FastAPI sends the response back to the frontend.
-7. The chatbot displays the AI response.
-
----
-
-## 🧠 What I Learned
-
-Through this project, I learned the basic workflow behind an AI-powered web application:
-
-* How frontend and backend communicate
-* How to create APIs using FastAPI
-* How HTTP requests work
-* How to connect an application to an LLM API
-* How to use environment variables for API keys
-* How to use Python virtual environments
-* How to structure a simple full-stack AI application
-* How to use Git and GitHub for version control
-
----
-
-## 🔮 Future Improvements
-
-This project is intentionally kept simple as **Version 1**.
-
-Possible future improvements include:
-
-* 🧠 Conversation memory
-* 📄 RAG / document-based question answering
-* 📎 File upload
-* 🎙️ Voice input and output
-* 🔐 User authentication
-* 💾 Chat history
-* 🧰 AI tools and function calling
-* 📊 Conversation analytics
-* 🌐 Deployment
-* 🤖 More advanced agent capabilities
-
----
-
-## 🎯 Project Goal
-
-The goal of this project is to understand the fundamentals of building an **AI-powered chatbot from scratch**, starting with a simple implementation and gradually adding more advanced AI capabilities.
-
----
+The basic AI chatbot is working with a frontend, FastAPI backend, and Groq-powered AI responses.
 
 ## 👨‍💻 Author
 
 **Prajwal Sortur**
 
-Electronics & Communication Engineering Graduate
-Interested in:
-
-* Data Science
-* Artificial Intelligence
-* Machine Learning
-* Generative AI
-* AI Engineering
-* Data Analytics
-
-### 🔗 Links
-
-* GitHub: https://github.com/prajwalsortur
-* Project Repository: https://github.com/prajwalsortur/CHAT-BOT
+GitHub:
+https://github.com/prajwalsortur
 
 ---
 
-## ⭐ Future Roadmap
-
-```text
-Version 1
-Simple AI Chatbot
-       ↓
-Version 2
-Conversation Memory
-       ↓
-Version 3
-RAG + Document Chat
-       ↓
-Version 4
-AI Tools / Function Calling
-       ↓
-Version 5
-Agentic AI Chatbot
-```
-
----
-
-## 📄 License
-
-This project is created for learning and educational purposes.
+⭐ If you find this project useful, consider giving it a star!
