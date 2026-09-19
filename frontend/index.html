@@ -97,7 +97,7 @@
     const messageInput = document.getElementById("message-input");
     const chatBox = document.getElementById("chat-box");
 
-    sendButton.addEventListener("click", async () => {
+        async function sendMessage() {
 
         const message = messageInput.value;
 
@@ -126,7 +126,9 @@
 
         // Show AI response
         chatBox.innerHTML += `<p><strong>AI:</strong> ${data.response}</p>`;
-    });
+    }
+
+    sendButton.addEventListener("click", sendMessage);
 </script>
 </body>
 </html>
