@@ -8,6 +8,7 @@ import os
 load_dotenv("backend/.env")
 
 app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -20,7 +21,7 @@ client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 
 class ChatRequest(BaseModel):
-    message: str
+    messages: list
 
 
 @app.get("/")
@@ -35,12 +36,7 @@ def chat(request: ChatRequest):
 
     response = client.chat.completions.create(
         model="openai/gpt-oss-20b",
-        messages=[
-            {
-                "role": "user",
-                "content": request.message
-            }
-        ]
+        messages=request.messages
     )
 
     return {
