@@ -2,16 +2,21 @@
 
 A simple AI chatbot built with **HTML, CSS, JavaScript, FastAPI, and Groq API**.
 
-The frontend allows users to send messages, while the FastAPI backend communicates with the Groq LLM and returns the AI-generated response.
+The frontend provides a clean chat interface, while the FastAPI backend communicates with the Groq LLM and returns AI-generated responses. The chatbot also maintains **conversation history** during the current chat session.
 
 ## 🚀 Features
 
-* 💬 Simple AI chat interface
+* 💬 Simple and responsive AI chat interface
+* 🤖 Groq-powered AI responses
 * ⚡ FastAPI backend
-* 🤖 Groq LLM integration
+* 🧠 Conversation history
+* ⌨️ Send messages using the Enter key
+* 🔄 Loading indicator while waiting for AI responses
+* 💭 Separate user and AI chat bubbles
+* ⚠️ Basic error handling
 * 🌐 HTML, CSS & JavaScript frontend
 * 🔐 API key stored securely using `.env`
-* 🔗 Frontend connected to backend API
+* 🔗 Frontend connected to FastAPI backend
 
 ## 🛠️ Technologies Used
 
@@ -22,19 +27,22 @@ The frontend allows users to send messages, while the FastAPI backend communicat
 * **HTML**
 * **CSS**
 * **JavaScript**
+* **python-dotenv**
 * **Git & GitHub**
 
 ## 📁 Project Structure
 
 ```text
-AI-CHATBOT/
+AI-CHATBOT-USING-FASTAPI-GROQ/
 │
 ├── backend/
 │   ├── main.py
 │   └── .env
 │
 ├── frontend/
-│   └── index.html
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
 │
 ├── .gitignore
 └── README.md
@@ -45,7 +53,9 @@ AI-CHATBOT/
 ```text
 User
   ↓
-Frontend
+Frontend Chat Interface
+  ↓
+JavaScript
   ↓
 FastAPI Backend
   ↓
@@ -53,28 +63,50 @@ Groq API
   ↓
 AI Response
   ↓
+Conversation History
+  ↓
 Frontend
 ```
 
-## 🧑‍💻 Run the Project Locally
+## 🧠 Conversation History
+
+The chatbot keeps track of previous messages during the current conversation.
+
+For example:
+
+```text
+User: My name is Prajwal.
+
+AI: Nice to meet you, Prajwal!
+
+User: What is my name?
+
+AI: Your name is Prajwal.
+```
+
+This allows the chatbot to understand the context of previous messages instead of treating every message as completely separate.
+
+## ⚙️ Run the Project Locally
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/prajwalsortur/CHAT-BOT.git
+git clone https://github.com/prajwalsortur/AI-CHATBOT-USING-FASTAPI-GROQ.git
 ```
 
 ### 2. Open the project
 
 ```bash
-cd CHAT-BOT
+cd AI-CHATBOT-USING-FASTAPI-GROQ
 ```
 
-### 3. Create and activate virtual environment
+### 3. Create a virtual environment
 
 ```bash
 python -m venv .venv
 ```
+
+### 4. Activate the virtual environment
 
 **Windows:**
 
@@ -82,13 +114,13 @@ python -m venv .venv
 .venv\Scripts\activate
 ```
 
-### 4. Install dependencies
+### 5. Install dependencies
 
 ```bash
 pip install fastapi uvicorn groq python-dotenv
 ```
 
-### 5. Add your Groq API key
+### 6. Add your Groq API key
 
 Create a `.env` file inside the `backend` folder:
 
@@ -96,7 +128,7 @@ Create a `.env` file inside the `backend` folder:
 GROQ_API_KEY=your_api_key_here
 ```
 
-### 6. Start the backend
+### 7. Start the backend
 
 From the project root:
 
@@ -110,7 +142,7 @@ The backend will run at:
 http://127.0.0.1:8000
 ```
 
-### 7. Open the frontend
+### 8. Open the frontend
 
 Open:
 
@@ -118,19 +150,52 @@ Open:
 frontend/index.html
 ```
 
-in your browser and start chatting.
+in your browser.
+
+You can now start chatting with the AI.
 
 ## 🔐 Security
 
 The Groq API key is stored in the `.env` file and should **never be uploaded to GitHub**.
 
-Make sure `.env` is included in `.gitignore`.
+Make sure your `.gitignore` contains:
 
-## 📌 Project Status
+```text
+.env
+.venv/
+__pycache__/
+```
 
-**Version 1 — Completed**
+Never share your API key publicly.
 
-The basic AI chatbot is working with a frontend, FastAPI backend, and Groq-powered AI responses.
+## 📌 Project Progress
+
+### Version 1 — Completed
+
+* Basic AI chatbot
+* FastAPI backend
+* Groq API integration
+* Frontend chat interface
+
+### Version 2 — Completed
+
+* Conversation history
+* Context-aware conversations
+* Improved frontend interaction
+
+### Version 3 — Completed
+
+* Clear chat functionality
+* Enter key to send messages
+* Loading indicator
+* User and AI message bubbles
+* Basic error handling
+
+## 🎯 Project Goal
+
+The goal of this project is to build a simple understanding of how an AI-powered application works from **frontend → backend → LLM API → frontend response**.
+
+It also serves as a foundation for gradually adding more advanced AI application features in future versions.
 
 ## 👨‍💻 Author
 
