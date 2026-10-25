@@ -1,4 +1,3 @@
-
 # AI CHATBOT USING FASTAPI & GROQ
 
 A simple AI chatbot built with **HTML, CSS, JavaScript, FastAPI, and Groq API**.
@@ -16,6 +15,7 @@ This project demonstrates how a basic LLM application works without using comple
 The main goal is to understand the core communication flow:
 
 ```text
+
 User
   ↓
 Frontend
@@ -362,42 +362,3 @@ Open `index.html` using a local development server.
 The frontend will communicate with the FastAPI backend.
 
 ---
-
-# 🔌 Application Architecture
-
-The project follows a simple client-server architecture:
-
-```text
-                USER
-                  │
-                  ▼
-        ┌──────────────────┐
-        │    FRONTEND      │
-        │ HTML/CSS/JS      │
-        └────────┬─────────┘
-                 │
-                 │ HTTP Request
-                 ▼
-        ┌──────────────────┐
-        │     FASTAPI      │
-        │     BACKEND      │
-        └────────┬─────────┘
-                 │
-                 │ API Request
-                 ▼
-        ┌──────────────────┐
-        │    GROQ API      │
-        └────────┬─────────┘
-                 │
-                 ▼
-        ┌──────────────────┐
-        │       LLM        │
-        │ Language Model   │
-        └────────┬─────────┘
-                 │
-                 ▼
-        Generated Response
-                 │
-                 ▼
-        ┌──────────────────┐
-```
